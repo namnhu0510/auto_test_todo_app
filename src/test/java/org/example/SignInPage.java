@@ -7,15 +7,19 @@ import org.openqa.selenium.WebElement;
 public class SignInPage {
     private WebDriver driver;
 
-    private By userNameTextField = By.xpath("input[name='login");
+    private By signInWithGitHub = By.cssSelector("a[ng-click='login.loginWithGithub()']");
 
-    private By passwordTextField = By.xpath("input[name='password']");
+    private By userNameTextField = By.cssSelector("input[name='login']");
 
-    private By signInButton = By.xpath("input[name='commit']");
+    private By passwordTextField = By.cssSelector("input[name='password']");
+
+    private By signInButton = By.cssSelector("input[name='commit']");
 
     public SignInPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    public void clickSignInWithGitHub (){driver.findElement(signInWithGitHub).click();}
 
     public void enterUserName (String username){
         driver.findElement(userNameTextField).sendKeys(username);
@@ -28,9 +32,5 @@ public class SignInPage {
     public void clickSignIn (){
         driver.findElement(signInButton).click();
     }
-
-
-
-
 
 }
