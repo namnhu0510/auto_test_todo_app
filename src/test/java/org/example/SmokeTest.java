@@ -14,23 +14,15 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 public class SmokeTest {
-    String USER_NAME_GITHUB = "sutrix.nam.nd@gmail.com";
-    String PASSWORD = "Chucthanhcong123!@#";
 
-    WebDriver webDriver;
-
+    private WebDriver webDriver;
     @Test
     public void TestMethod() throws InterruptedException {
 
-        ChromeDriverManager.getInstance().setup();
-        // Instantiate a ChromeDriver class.
-        webDriver = new ChromeDriver();
+        BaseSetup baseSetup = new BaseSetup(webDriver);
 
-        // Launch Website
-        webDriver.navigate().to("https://todo-list-login.firebaseapp.com");
-
-        //Maximize the browser
-        webDriver.manage().window().maximize();
+        //launch browser
+        baseSetup.launchBrowser();
 
         webDriver.findElement(By.cssSelector("a[ng-click='login.loginWithGithub()']")).click();
 
@@ -50,12 +42,16 @@ public class SmokeTest {
                 webDriver.switchTo().window(child_window);
             }
         }
+        SignInPage signInPage = new SignInPage(webDriver);
 
-        webDriver.findElement(By.cssSelector("input[name='login']")).sendKeys(USER_NAME_GITHUB);
+        //enter username
+        signInPage.enterUserName(baseSetup.getUSER_NAME_GITHUB());
 
-        webDriver.findElement(By.cssSelector("input[name='password']")).sendKeys(PASSWORD);
+        //enter password
+        signInPage.enterPassword(baseSetup.getPASSWORD());
 
-        webDriver.findElement(By.cssSelector("input[name='commit']")).click();
+        //click submit
+        signInPage.clickSignIn();
 
         webDriver.switchTo().window(parent);
 
